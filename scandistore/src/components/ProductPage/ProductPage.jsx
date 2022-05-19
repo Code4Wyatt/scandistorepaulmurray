@@ -1,8 +1,19 @@
-import React, { Component } from 'react'
-import './ProductPage.scss'
+import React, { Component } from "react";
+import "./ProductPage.scss";
 import { useParams } from "react-router-dom";
+import { request, gql } from "graphql-request";
 
-const GET_PRODUCT = gql`
+export default class ProductPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { product: [] };
+  }
+
+  render() {
+    const id = useParams.id;
+    console.log(this.props);
+
+    const GET_PRODUCT = gql`
 {
     product (id: ${id} )  {
     id
@@ -32,14 +43,23 @@ const GET_PRODUCT = gql`
     }
 }
 `;
+componentDidMount() {
+    request("http://localhost:4000", GET_CLOTHES).then((data) => {
+      console.log(data);
+      this.setState({ data: data.category.products });
+      console.log("Products State: ", this.state.data);
+      
 
-export default class ProductPage extends Component {
-   
-  render() {
-    const id = useParams.id;
-    console.log(this.props)
-    return (
-      <div product={this.props.product}>d</div>
-    )
+    }).then(() => {
+      let handleAddProducts = () => {
+        this.props.addCartItemAction(this.state.data)
+      }
+
+      handleAddProducts();
+    });
+  }
+
+
+    return (<div product={this.props.product}>d</div>);
   }
 }
