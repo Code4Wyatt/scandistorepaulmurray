@@ -6,28 +6,29 @@ import reportWebVitals from './reportWebVitals';
 import {
   ApolloClient,
   InMemoryCache,
-  ApolloProvider,
- 
-  gql,
+  ApolloProvider
 } from "@apollo/client";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { configureStore, persistor } from './redux/store'
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react'
 
 const client = new ApolloClient({ 
   uri: 'http://localhost:4000', // Change to localhost:4000
   cache: new InMemoryCache()
 });
 
-
-
-
-
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
+    <Provider store={configureStore}>
+      <PersistGate persistor={persistor}>
     <ApolloProvider client={client}>
     <App />
    </ApolloProvider>
+   </PersistGate>
+    </Provider>
   </React.StrictMode>
    
 );

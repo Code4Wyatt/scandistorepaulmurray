@@ -1,0 +1,29 @@
+.row {
+    padding: 20px;
+}
+.header {
+    width: 50%;
+}
+.clothes-container {
+    h2 {
+        position: relative;
+        left: 10%;
+    }
+}
+
+.product {
+    border: 1px solid grey;
+    height: 300px;
+    max-width: 300px !important;
+    margin: 55px;
+    .product__image {
+        height: 200px;
+        width: 100%;
+        object-fit: contain;
+    }
+
+   .prices {
+       font-weight: bold;
+   }
+    
+}
