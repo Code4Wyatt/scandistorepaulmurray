@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import './Product.scss';
 
 export default class Product extends Component {
   render() {
@@ -14,8 +15,8 @@ export default class Product extends Component {
         <p className="prices">
           <b>£{this.props.product.prices[0].amount}</b>
         </p>
-        <Link to={this.props.product.id}>
-            Go To Product
+        <Link to={this.props.product.id} className="product-link">
+            View Product
         </Link>
         {/* {product.prices.map((price) => {
           return (

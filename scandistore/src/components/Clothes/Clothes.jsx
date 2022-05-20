@@ -29,6 +29,16 @@ const GET_CLOTHES = gql`
         gallery
         description
         category
+        attributes {
+        id
+        name
+        type
+        items {
+          displayValue
+          value
+          id
+        }
+      }
         prices {
           currency {
             label
@@ -79,7 +89,7 @@ export class Clothes extends Component {
               let trimmed = cleaned.substring(0, 31);
               console.log("name", product.name)
               return (
-                <div>
+                <div className="col-4 products">
                   <Product product={product}/>
                 {/* <div key={i} className="col-4 product">
                   <img
