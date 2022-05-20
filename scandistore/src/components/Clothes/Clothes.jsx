@@ -5,6 +5,7 @@ import "./Clothes.scss";
 import Product from "../../components/Product/Product";
 import { useSelector, connect, useDispatch } from "react-redux";
 import { addCartItemAction } from "../../redux/actions/CartAction";
+import { Link } from "react-router-dom";
 
 
 const GET_CLOTHES = gql`
@@ -58,6 +59,7 @@ export class Clothes extends Component {
     console.log("read", this.state.data);
     return (
       <>
+      
         <div className="container-fluid clothes-container">
           <h2 className="header">All Products</h2>
           <div className="row">
