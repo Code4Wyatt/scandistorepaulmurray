@@ -26,7 +26,7 @@ const withRouter = (WrappedComponent) => (props) => {
 class ProductPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { product: {}, gallery: [], attributes: [], name: "", brand: "" };
+    this.state = { product: {}, gallery: [], attributes: [], prices: [], name: "", brand: "" };
   }
 
   componentDidMount() {
@@ -45,15 +45,16 @@ class ProductPage extends Component {
     });
     this.setState({ product: product });
 
-    console.log("Attributes >>>", product[0].attributes);
+    console.log("Attributes >>>", product[0].prices);
     this.setState({ name: product[0].name });
     this.setState({ brand: product[0].brand });
     this.setState({ gallery: product[0].gallery });
     this.setState({ attributes: product[0].attributes });
+    this.setState({ prices: product[0].prices });
   }
 
   render() {
-    console.log(this.state.product[0]);
+    console.log(this.state.prices);
     console.log("Gallery", this.state.gallery);
 
     return (
@@ -74,21 +75,7 @@ class ProductPage extends Component {
             <h2>{this.state.brand}</h2>
           </div>
           <div>
-            <h4>SIZE</h4> 
-            <div className="product-size">
-              <div className="size-box">
-                <p className="size-text">XS</p>
-              </div>
-              <div className="size-box">
-                <p className="size-text">S</p>
-              </div>
-              <div className="size-box">
-                <p className="size-text">M</p>
-              </div>
-              <div className="size-box">
-                <p className="size-text">L</p>
-              </div>
-            </div>
+            
             </div>
             <div className="attributes">
               {this.state.attributes.map((attribute) => {
@@ -96,11 +83,20 @@ class ProductPage extends Component {
                   <h1>{attribute.name}</h1>
                   <div className="colors">
                   {attribute.items.map((item) => {
-                    return <div style={{ backgroundColor: `${item.value}`, color: `${item.value}` }} className="colors"></div>
+                    return <div style={{ backgroundColor: `${item.value}`, color: `${item.value}` }} className="option" >
+                      <div className="option-value"><p className="value">{item.value}</p></div>
+                    </div>
                   })}
+                    
                   </div>
                   </div>
                 )
+              })}
+            </div>
+            <div className="price">
+              <h2>Price</h2>
+              {this.state.prices.map((price) => {
+                return <p>{price.currency.symbol}{price.amount}</p>
               })}
             </div>
         </div>

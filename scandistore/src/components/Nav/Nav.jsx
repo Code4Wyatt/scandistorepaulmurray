@@ -31,10 +31,16 @@ export default class Nav extends Component {
                       <a href="#">$</a>
                     </li>
                     <li>
-                      <a href="#">Sub-2</a>
+                      <a href="#">£</a>
                     </li>
                     <li>
-                      <a href="#">Sub-3</a>
+                      <a href="#">A$</a>
+                    </li>
+                    <li>
+                      <a href="#">¥</a>
+                    </li>
+                    <li>
+                      <a href="#">₽</a>
                     </li>
                   </ul>
                 </li>

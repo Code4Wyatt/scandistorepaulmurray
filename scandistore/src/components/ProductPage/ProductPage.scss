@@ -47,8 +47,26 @@
                 display: flex;
                 height: 30px;
                 width: 30%;
+                
+            }
+            .option:hover{
+                
+                border: 1px solid black;
+                
             }
         }
+
+        .option-value {
+            margin: 10px;
+            .value {
+                position: relative;
+                bottom: 10px;
+            }
+           
+        }
+
+        
+
         .product-title {
             margin-bottom: 50px;
         }
