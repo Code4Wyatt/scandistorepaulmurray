@@ -2,18 +2,18 @@ import React, { Component } from "react";
 import "./ProductPage.scss";
 import { useParams, useNavigate } from "react-router-dom";
 import { request, gql } from "graphql-request";
-import { connect } from 'react-redux'
+import { connect } from "react-redux";
 import { addCartItemAction } from "../../redux/actions/CartAction";
 
-const mapStateToProps = state => ({
-  products: [state.products.items]
-})
+const mapStateToProps = (state) => ({
+  products: [state.products.products],
+});
 
 const mapDispatchToProps = (dispatch) => ({
   addToCart: (product) => {
-    dispatch(addCartItemAction(product))
+    dispatch(addCartItemAction(product));
   },
-})
+});
 
 const withRouter = (WrappedComponent) => (props) => {
   const params = useParams();
@@ -25,61 +25,74 @@ const withRouter = (WrappedComponent) => (props) => {
 class ProductPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { product: [] };
+    this.state = { product: {}, gallery: [], name: "", brand: "" };
   }
 
   componentDidMount() {
-    
-    const idFromParams = this.props.params.name;
-    const id = idFromParams.split("-")[0];
-    console.log(this.props);
-  
-    let GET_PRODUCT = gql`
-      query GetProductById($id: String) {
-           product (id: ${id})  {
-           id
-           name
-           inStock
-           gallery
-           description
-           category
-           attributes {
-             id
-             name
-             type
-             items {
-               displayValue
-               value
-               id
-             }
-           }
-           prices {
-             currency {
-               label
-               symbol
-             }
-             amount
-           }
-           brand
-           }
-       }
-    
-       `;
-    
-    request("http://localhost:4000", GET_PRODUCT).then((data) => {
-      console.log("Product Data: ", data);
-      this.setState({ data: data.category.products });
-      console.log("Products State: ", this.state.data);
+    // const idFromParams = this.props.params.name;
+    // const id = idFromParams.split("-")[0];
+
+    const id = this.props.params.name;
+
+    console.log("id", id);
+    console.log(this.props.products[0][0].category.products);
+
+    const productArray = this.props.products[0][0].category.products;
+
+    let product = productArray.filter(function (product) {
+      return id.indexOf(product.id) >= 0;
     });
+    this.setState({ product: product });
+
+    console.log(product[0].name);
+    this.setState({ name: product[0].name });
+    this.setState({ brand: product[0].brand });
+    this.setState({ gallery: product[0].gallery });
   }
 
   render() {
-    let id = this.props.params;
+    console.log(this.state.product[0]);
+    console.log("Gallery", this.state.gallery);
 
-    console.log(this.id);
-
-    return <div product={this.props.product}>d</div>;
+    return (
+      <div className="product-page-section">
+        <div className="product-gallery">
+          {this.state.gallery.map((img, i) => {
+            return <img src={this.state.gallery[i]} className="gallery-img" />;
+          })}
+        </div>
+        <div className="product-image">
+          <img src={this.state.gallery[0]} className="product-img" />
+        </div>
+        <div className="product-options">
+          <div className="product-title">
+            <h1>{this.state.name}</h1>
+            <h2>{this.state.brand}</h2>
+          </div>
+          <div>
+            <h4>SIZE</h4>
+            <div className="product-size">
+              <div className="size-box">
+                <p className="size-text">XS</p>
+              </div>
+              <div className="size-box">
+                <p className="size-text">S</p>
+              </div>
+              <div className="size-box">
+                <p className="size-text">M</p>
+              </div>
+              <div className="size-box">
+                <p className="size-text">L</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)((props) => <ProductPage {...props} params={useParams()} />);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)((props) => <ProductPage {...props} params={useParams()} />);
