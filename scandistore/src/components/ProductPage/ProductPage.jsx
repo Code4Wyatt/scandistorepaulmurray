@@ -17,13 +17,14 @@ class ProductPage extends Component {
   }
 
   componentDidMount() {
-    const name = this.props.params.name;
-    const id = name.substring(0, 4);
+    
+    const idFromParams = this.props.params.name;
+    const id = idFromParams.split("-")[0];
     console.log(id);
   
     let GET_PRODUCT = gql`
       query GetProductById($id: String) {
-           product (id: ${id} )  {
+           product (id: ${id})  {
            id
            name
            inStock

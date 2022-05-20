@@ -4,17 +4,21 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from 'redux-persist/lib/storage';
 import { encryptTransform } from 'redux-persist-transform-encrypt';
 import cartReducer from '../redux/reducers/CartReducer'
+import productsReducer from "./reducers/ProductsReducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const initialState = {
   cart: {
     items: [],
+  },
+  products: {
+    items: [],
   }
 };
 
 const rootReducer = combineReducers({
-
+  products: productsReducer,
   cart: cartReducer,
 });
 

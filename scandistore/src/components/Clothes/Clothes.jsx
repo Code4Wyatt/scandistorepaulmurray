@@ -5,8 +5,18 @@ import "./Clothes.scss";
 import Product from "../../components/Product/Product";
 import { useSelector, connect, useDispatch } from "react-redux";
 import { addCartItemAction } from "../../redux/actions/CartAction";
+import { addProductsAction } from "../../redux/actions/ProductsAction";
 import { Link } from "react-router-dom";
 
+const mapStateToProps = state => ({
+  cart: state.cart.items
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  addToProducts: (products) => {
+    dispatch(addProductsAction(products))
+  }
+})
 
 const GET_CLOTHES = gql`
   {
@@ -44,11 +54,11 @@ export class Clothes extends Component {
       console.log(data);
       this.setState({ data: data.category.products });
       console.log("Products State: ", this.state.data);
-      
+      this.props.addToProducts(data);
 
     }).then(() => {
       let handleAddProducts = () => {
-        this.props.addCartItemAction(this.state.data)
+        addCartItemAction(this.state.data)
       }
 
       handleAddProducts();
@@ -59,7 +69,7 @@ export class Clothes extends Component {
     console.log("read", this.state.data);
     return (
       <>
-      
+
         <div className="container-fluid clothes-container">
           <h2 className="header">All Products</h2>
           <div className="row">
@@ -102,4 +112,4 @@ export class Clothes extends Component {
   }
 }
 
-export default Clothes;
+export default connect(mapStateToProps, mapDispatchToProps)(Clothes);
