@@ -2,6 +2,18 @@ import React, { Component } from "react";
 import "./ProductPage.scss";
 import { useParams, useNavigate } from "react-router-dom";
 import { request, gql } from "graphql-request";
+import { connect } from 'react-redux'
+import { addCartItemAction } from "../../redux/actions/CartAction";
+
+const mapStateToProps = state => ({
+  products: [state.products.items]
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  addToCart: (product) => {
+    dispatch(addCartItemAction(product))
+  },
+})
 
 const withRouter = (WrappedComponent) => (props) => {
   const params = useParams();
@@ -20,7 +32,7 @@ class ProductPage extends Component {
     
     const idFromParams = this.props.params.name;
     const id = idFromParams.split("-")[0];
-    console.log(id);
+    console.log(this.props);
   
     let GET_PRODUCT = gql`
       query GetProductById($id: String) {
@@ -70,4 +82,4 @@ class ProductPage extends Component {
   }
 }
 
-export default (props) => <ProductPage {...props} params={useParams()} />;
+export default connect(mapStateToProps, mapDispatchToProps)((props) => <ProductPage {...props} params={useParams()} />);
