@@ -3,50 +3,12 @@ import "./ProductPage.scss";
 import { useParams, useNavigate } from "react-router-dom";
 import { request, gql } from "graphql-request";
 
-const withRouter = WrappedComponent => props => {
-    const params = useParams();
-    const navigate = useNavigate();
+const withRouter = (WrappedComponent) => (props) => {
+  const params = useParams();
+  const navigate = useNavigate();
 
-    return (
-        <WrappedComponent
-            {...props}
-            params={params}
-            navigate={navigate}
-        />
-    );
+  return <WrappedComponent {...props} params={params} navigate={navigate} />;
 };
-
-// let GET_PRODUCT = gql`
-// query GetProductById($id: String!) {
-//      product (id: ${id} )  {
-//      id
-//      name
-//      inStock
-//      gallery
-//      description
-//      category
-//      attributes {
-//        id
-//        name
-//        type
-//        items {
-//          displayValue
-//          value
-//          id
-//        }
-//      }
-//      prices {
-//        currency {
-//          label
-//          symbol
-//        }
-//        amount
-//      }
-//      brand
-//      }
-//  }
-
-//  `;
 
 class ProductPage extends Component {
   constructor(props) {
@@ -54,59 +16,57 @@ class ProductPage extends Component {
     this.state = { product: [] };
   }
 
+  componentDidMount() {
+    const name = this.props.params.name;
+    const id = name.substring(0, 4);
+    console.log(id);
   
-//   componentDidMount() {
-//     request("http://localhost:4000", {
-//         body: `
-//         query GetProductById($id: String!) {
-//              product (id: ${this.id} )  {
-//              id
-//              name
-//              inStock
-//              gallery
-//              description
-//              category
-//              attributes {
-//                id
-//                name
-//                type
-//                items {
-//                  displayValue
-//                  value
-//                  id
-//                }
-//              }
-//              prices {
-//                currency {
-//                  label
-//                  symbol
-//                }
-//                amount
-//              }
-//              brand
-//              }
-//          }
-       
-//          `
-//     }).then((data) => {
-//       console.log("Product Data: ", data);
-//       this.setState({ data: data.category.products });
-//       console.log("Products State: ", this.state.data);
-      
-
-//     })
-//   };
-
-
+    let GET_PRODUCT = gql`
+      query GetProductById($id: String) {
+           product (id: ${id} )  {
+           id
+           name
+           inStock
+           gallery
+           description
+           category
+           attributes {
+             id
+             name
+             type
+             items {
+               displayValue
+               value
+               id
+             }
+           }
+           prices {
+             currency {
+               label
+               symbol
+             }
+             amount
+           }
+           brand
+           }
+       }
+    
+       `;
+    
+    request("http://localhost:4000", GET_PRODUCT).then((data) => {
+      console.log("Product Data: ", data);
+      this.setState({ data: data.category.products });
+      console.log("Products State: ", this.state.data);
+    });
+  }
 
   render() {
-    
     let id = this.props.params;
- 
-    console.log(this.id)
-       
-    return (<div product={this.props.product}>d</div>);
+
+    console.log(this.id);
+
+    return <div product={this.props.product}>d</div>;
   }
 }
 
-export default withRouter(ProductPage)
+export default (props) => <ProductPage {...props} params={useParams()} />;
