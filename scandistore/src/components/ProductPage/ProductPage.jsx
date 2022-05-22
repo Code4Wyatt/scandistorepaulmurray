@@ -9,6 +9,7 @@ import Nav from "../../components/Nav/Nav";
 const mapStateToProps = (state) => ({
   products: [state.products.products],
   currency: state.currency.value,
+  cart: state.cart.cart
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -62,9 +63,10 @@ class ProductPage extends Component {
   }
 
   render() {
-    console.log("PRICES", this.state.prices);
-    console.log("Gallery", this.state.gallery);
-    console.log(this.props.currency[0].items);
+    // console.log("PRICES", this.state.prices);
+    // console.log("Gallery", this.state.gallery);
+    // console.log(this.props.currency[0].items);
+    console.log("CART", this.props)
     return (
       <>
         <Nav />
@@ -131,18 +133,25 @@ class ProductPage extends Component {
                     {this.state.prices[2]?.currency.symbol}
                     {this.state.prices[2]?.amount}
                   </p>
-                )) || (this.props.currency[0].items === "JPY" && (
+                )) ||
+                (this.props.currency[0].items === "JPY" && (
                   <p>
                     {this.state.prices[3]?.currency.symbol}
                     {this.state.prices[3]?.amount}
                   </p>
-                )) || (this.props.currency[0].items === "RUB" && (
+                )) ||
+                (this.props.currency[0].items === "RUB" && (
                   <p>
                     {this.state.prices[4]?.currency.symbol}
                     {this.state.prices[4]?.amount}
                   </p>
-                ))
-                }
+                ))}
+            </div>
+            <div className="add-to-basket" onClick={() => 
+              this.props.addToCart(this.state.name)}>
+              <div className="add-button">
+                <h5>Add To Basket</h5>
+              </div>
             </div>
           </div>
         </div>

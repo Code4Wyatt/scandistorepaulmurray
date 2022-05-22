@@ -10,7 +10,7 @@ export default function cartReducer(state = initialState.cart, action) {
         case ADD_CART_ITEM: 
             return { 
                 ...state,
-                cart: [ payload ],
+                cart: [ ...state.cart, payload ],
             }
         case REMOVE_CART_ITEM:
             return {

@@ -2,44 +2,49 @@ import "./Nav.scss";
 import React, { Component } from "react";
 import logo from "../../media/logo.png";
 import { setCurrencyAction } from "../../redux/actions/CurrencyAction.js";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 
-const mapStateToProps = state => ({
-  currency: state.currency.value
+const mapStateToProps = (state) => ({
+  currency: state.currency.value,
+  cart: state.cart.cart,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrency: (value) => {
-    dispatch(setCurrencyAction(value))
-  }
+    dispatch(setCurrencyAction(value));
+  },
 });
 
 class Nav extends Component {
   constructor(props) {
-     super(props);
-      this.state = { currency: 'GBP'};
-  };
+    super(props);
+    this.state = { currency: "GBP" };
+  }
 
-  
-componentDidMount() {
-  console.log("Currency state: ", this.props.currency[0].items)
-}
+  componentDidMount() {
+    console.log("Currency state: ", this.props.currency[0].items);
+    console.log("NAV PROPS", this.props);
+  }
 
   render() {
-
-  
     return (
       <div className="container-fluid">
         <div className="row">
           <div className="col nav-links">
             <div>
-              <a className="nav-link" href="/">Women</a>
+              <a className="nav-link" href="/">
+                Women
+              </a>
             </div>
             <div>
-              <a className="nav-link" href="/">Men</a>
+              <a className="nav-link" href="/">
+                Men
+              </a>
             </div>
             <div>
-              <a className="nav-link" href="/">Tech</a>
+              <a className="nav-link" href="/">
+                Tech
+              </a>
             </div>
           </div>
           <div className="col nav-logo">
@@ -50,36 +55,56 @@ componentDidMount() {
               <ul>
                 <li>
                   <div className="currency-button">
-                  
-                  {this.props.currency[0].items === "USD" && <p>$</p> ||
-                  this.props.currency[0].items === "GBP" && <p>£</p> || this.props.currency[0].items === "AUD" && <p>A$</p> || this.props.currency[0].items === "JPY" && <p>¥</p> || this.props.currency[0].items === "RUB" && <p>₽</p>
-                  
-                  
-                  
-                  }
+                    {(this.props.currency[0].items === "USD" && <p>$</p>) ||
+                      (this.props.currency[0].items === "GBP" && <p>£</p>) ||
+                      (this.props.currency[0].items === "AUD" && <p>A$</p>) ||
+                      (this.props.currency[0].items === "JPY" && <p>¥</p>) ||
+                      (this.props.currency[0].items === "RUB" && <p>₽</p>)}
                   </div>
                   <ul className="dropdown">
                     <li>
-                      <div className="currency-options" onClick={() => this.props.setCurrency({items: 'USD'})}>$</div>
+                      <div
+                        className="currency-options"
+                        onClick={() => this.props.setCurrency({ items: "USD" })}
+                      >
+                        $
+                      </div>
                     </li>
                     <li>
-                      <div onClick={() => this.props.setCurrency({items: 'GBP'})}>£</div>
+                      <div
+                        onClick={() => this.props.setCurrency({ items: "GBP" })}
+                      >
+                        £
+                      </div>
                     </li>
                     <li>
-                      <div onClick={() => this.props.setCurrency({items: 'AUD'})}>A$</div>
+                      <div
+                        onClick={() => this.props.setCurrency({ items: "AUD" })}
+                      >
+                        A$
+                      </div>
                     </li>
                     <li>
-                      <div onClick={() => this.props.setCurrency({items: 'JPY'})}>¥</div>
+                      <div
+                        onClick={() => this.props.setCurrency({ items: "JPY" })}
+                      >
+                        ¥
+                      </div>
                     </li>
                     <li>
-                      <div onClick={() => this.props.setCurrency({items: 'RUB'})}>₽</div>
+                      <div
+                        onClick={() => this.props.setCurrency({ items: "RUB" })}
+                      >
+                        ₽
+                      </div>
                     </li>
                   </ul>
                 </li>
               </ul>
             </div>
             <div className="cart-option">
-              <a href="/">
+              {this.props.cart.length}
+              <a href="/cart">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -97,6 +122,6 @@ componentDidMount() {
       </div>
     );
   }
-};
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nav);

@@ -3,7 +3,7 @@ export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM';
 
 export const addCartItemAction = (data) => ({
     type: ADD_CART_ITEM,
-    payload: data,
+    payload: [data],
 })
 
 export const removeCartItemAction = (index) => ({
