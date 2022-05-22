@@ -8,6 +8,7 @@ import Nav from "../../components/Nav/Nav";
 
 const mapStateToProps = (state) => ({
   products: [state.products.products],
+  currency: state.currency.value,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -26,7 +27,14 @@ const withRouter = (WrappedComponent) => (props) => {
 class ProductPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { product: {}, gallery: [], attributes: [], prices: [], name: "", brand: "" };
+    this.state = {
+      product: {},
+      gallery: [],
+      attributes: [],
+      prices: [],
+      name: "",
+      brand: "",
+    };
   }
 
   componentDidMount() {
@@ -37,7 +45,7 @@ class ProductPage extends Component {
 
     console.log("id", id);
     console.log(this.props.products[0][0].category.products);
-
+    console.log("CURRRR", this.props.currency[0].items);
     const productArray = this.props.products[0][0].category.products;
 
     let product = productArray.filter(function (product) {
@@ -54,55 +62,91 @@ class ProductPage extends Component {
   }
 
   render() {
-    console.log(this.state.prices);
+    console.log("PRICES", this.state.prices);
     console.log("Gallery", this.state.gallery);
-
+    console.log(this.props.currency[0].items);
     return (
       <>
         <Nav />
         <div className="product-page-section">
-        <div className="product-gallery">
-          {this.state.gallery.map((img, i) => {
-            return <img src={this.state.gallery[i]} className="gallery-img" />;
-          })}
-        </div>
-        <div className="product-image">
-          <img src={this.state.gallery[0]} className="product-img" />
-        </div>
-        <div className="product-options">
-          <div className="product-title">
-            <h1>{this.state.name}</h1>
-            <h2>{this.state.brand}</h2>
+          <div className="product-gallery">
+            {this.state.gallery.map((img, i) => {
+              return (
+                <img src={this.state.gallery[i]} className="gallery-img" />
+              );
+            })}
           </div>
-          <div>
-            
+          <div className="product-image">
+            <img src={this.state.gallery[0]} className="product-img" />
+          </div>
+          <div className="product-options">
+            <div className="product-title">
+              <h1>{this.state.name}</h1>
+              <h2>{this.state.brand}</h2>
             </div>
+            <div></div>
             <div className="attributes">
               {this.state.attributes.map((attribute) => {
-                return (<div>
-                  <h1>{attribute.name}</h1>
-                  <div className="colors">
-                  {attribute.items.map((item) => {
-                    return <div style={{ backgroundColor: `${item.value}`, color: `${item.value}` }} className="option" >
-                      <div className="option-value"><p className="value">{item.value}</p></div>
+                return (
+                  <div>
+                    <h1>{attribute.name}</h1>
+                    <div className="colors">
+                      {attribute.items.map((item) => {
+                        return (
+                          <div
+                            style={{
+                              backgroundColor: `${item.value}`,
+                              color: `${item.value}`,
+                            }}
+                            className="option"
+                          >
+                            <div className="option-value">
+                              <p className="value">{item.value}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
-                  })}
-                    
                   </div>
-                  </div>
-                )
+                );
               })}
             </div>
             <div className="price">
               <h2>Price</h2>
-              {this.state.prices.map((price) => {
-                return <p>{price.currency.symbol}{price.amount}</p>
-              })}
+
+              {(this.props.currency[0].items === "USD" && (
+                <p>
+                  {this.state.prices[0]?.currency.symbol}
+                  {this.state.prices[0]?.amount}
+                </p>
+              )) ||
+                (this.props.currency[0].items === "GBP" && (
+                  <p>
+                    {this.state.prices[1]?.currency.symbol}
+                    {this.state.prices[1]?.amount}
+                  </p>
+                )) ||
+                (this.props.currency[0].items === "AUD" && (
+                  <p>
+                    {this.state.prices[2]?.currency.symbol}
+                    {this.state.prices[2]?.amount}
+                  </p>
+                )) || (this.props.currency[0].items === "JPY" && (
+                  <p>
+                    {this.state.prices[3]?.currency.symbol}
+                    {this.state.prices[3]?.amount}
+                  </p>
+                )) || (this.props.currency[0].items === "RUB" && (
+                  <p>
+                    {this.state.prices[4]?.currency.symbol}
+                    {this.state.prices[4]?.amount}
+                  </p>
+                ))
+                }
             </div>
+          </div>
         </div>
-      </div>
       </>
-      
     );
   }
 }
