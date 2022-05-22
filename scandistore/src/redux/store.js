@@ -15,6 +15,9 @@ export const initialState = {
   },
   products: {
     items: [],
+  },
+  currency: {
+    value: 'GBP',
   }
 };
 

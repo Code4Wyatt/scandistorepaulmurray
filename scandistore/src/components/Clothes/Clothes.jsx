@@ -9,7 +9,7 @@ import { addProductsAction } from "../../redux/actions/ProductsAction";
 import { Link } from "react-router-dom";
 
 const mapStateToProps = state => ({
-  cart: state.cart.items
+  cart: state.cart.items, currency: state.currency.value
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -77,6 +77,7 @@ export class Clothes extends Component {
 
   render() {
     console.log("read", this.state.data);
+   console.log("CURRENCY", this.props.currency[0].items)
     return (
       <>
 

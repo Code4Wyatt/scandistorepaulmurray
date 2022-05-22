@@ -10,12 +10,12 @@ export default function currencyReducer(state = initialState.cart, action) {
         case SET_CURRENCY: 
             return { 
                 ...state,
-                currency: [ payload ],
+                value: [ payload ],
             }
         case REMOVE_CURRENCY:
             return {
                 ...state,
-                currency: state.cart.filter((cart) => cart !== payload),
+                value: state.cart.filter((cart) => cart !== payload),
             };
         default: 
             return state;

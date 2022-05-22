@@ -50,7 +50,7 @@
                 
             }
             .option:hover{
-                
+                cursor: pointer;
                 border: 1px solid black;
                 
             }
@@ -58,6 +58,7 @@
 
         .option-value {
             margin: 10px;
+            
             .value {
                 position: relative;
                 bottom: 10px;
