@@ -35,6 +35,7 @@ class ProductPage extends Component {
       prices: [],
       name: "",
       brand: "",
+      selectedAttributes: [],
     };
   }
 
@@ -67,6 +68,7 @@ class ProductPage extends Component {
     // console.log("Gallery", this.state.gallery);
     // console.log(this.props.currency[0].items);
     console.log("CART", this.props)
+    console.log(this.state.selectedAttributes)
     return (
       <>
         <Nav />
@@ -101,8 +103,8 @@ class ProductPage extends Component {
                               color: `${item.value}`,
                             }}
                             className="option"
-                          >
-                            <div className="option-value">
+                            onClick={() => this.setState({ selectedAttributes: [...this.state.selectedAttributes, `${item.value}`] })} >
+                            <div className="option-value" >
                               <p className="value">{item.value}</p>
                             </div>
                           </div>
@@ -148,7 +150,7 @@ class ProductPage extends Component {
                 ))}
             </div>
             <div className="add-to-basket" onClick={() => 
-              this.props.addToCart(this.state.name)}>
+              this.props.addToCart([this.state.product, [this.state.selectedAttributes]])}>
               <div className="add-button">
                 <h5>Add To Basket</h5>
               </div>

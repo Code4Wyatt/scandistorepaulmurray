@@ -25,7 +25,7 @@ class Cart extends Component {
          <div>
              <h3>Cart</h3>
              {this.props.cart.map((product) => {
-                 return <p>hi</p>
+                 return <div onClick={() => this.props.removeFromCart(product)}>hi</div>
              })}
          </div>
         </>
