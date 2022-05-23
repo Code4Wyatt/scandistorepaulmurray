@@ -5,6 +5,7 @@ import { request, gql } from "graphql-request";
 import { connect } from "react-redux";
 import { addCartItemAction } from "../../redux/actions/CartAction";
 import Nav from "../../components/Nav/Nav";
+import { Link } from "react-router-dom";
 
 const mapStateToProps = (state) => ({
   products: [state.products.products],
@@ -149,12 +150,23 @@ class ProductPage extends Component {
                   </p>
                 ))}
             </div>
+            <div className="d-flex">
             <div className="add-to-basket" onClick={() => 
               this.props.addToCart([this.state.product, [this.state.selectedAttributes]])}>
               <div className="add-button">
                 <h5>Add To Basket</h5>
               </div>
             </div>
+            <Link to='/cart' >
+            <div className="go-to-basket">
+              <div className="basket-button">
+                <h5>Go To Basket</h5>
+              </div>
+            </div>
+            </Link>
+            
+            </div>
+            
           </div>
         </div>
       </>

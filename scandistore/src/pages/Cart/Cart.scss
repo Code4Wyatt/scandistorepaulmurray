@@ -1,0 +1,16 @@
+.cart-item {
+    display: flex;
+
+    .cart-left {
+        display-direction: column;
+    }
+
+    .cart-right {
+        position: absolute;
+        right: 10px;
+        
+        img {
+            max-height: 100px;
+        }
+    }
+}
